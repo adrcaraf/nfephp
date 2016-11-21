@@ -493,14 +493,16 @@ class BaseTools
             $aURL = self::zLoadSEFAZ($pathXmlUrlFile, $tpAmb, $siglaUF, $tipo);
         }
         
+		$bService = isset($aURL[$service]);
+		
         //recuperação da versão
-        $this->urlVersion = $aURL[$service]['version'];
+        $this->urlVersion = $bService ? $aURL[$service]['version'] : '';
         //recuperação da url do serviço
-        $this->urlService = $aURL[$service]['URL'];
+        $this->urlService = $bService ? $aURL[$service]['URL'] : '';
         //recuperação do método
-        $this->urlMethod = $aURL[$service]['method'];
+        $this->urlMethod = $bService ? $aURL[$service]['method'] : '';
         //montagem do namespace do serviço
-        $this->urlOperation = $aURL[$service]['operation'];
+        $this->urlOperation = $bService ? $aURL[$service]['operation'] : '';
         $this->urlNamespace = sprintf("%s/wsdl/%s", $this->urlPortal, $this->urlOperation);
         //montagem do cabeçalho da comunicação SOAP
         $this->urlHeader = $this->zMountHeader($tipo, $this->urlNamespace, $this->urlcUF, $this->urlVersion);

@@ -78,8 +78,11 @@ class Dom extends DOMDocument
         if (empty($node)) {
             return '';
         }
-        $texto = ! empty($node->getElementsByTagName($name)->item(0)->nodeValue) ?
-            $node->getElementsByTagName($name)->item(0)->nodeValue : '';
+		
+		$elem = $node->getElementsByTagName($name);
+		$value = $elem->length > 0 ? $elem->item(0)->nodeValue : '';		
+        $texto = (empty($value) && !is_numeric($value)) ? '' : $value; 
+            
         return html_entity_decode($texto, ENT_QUOTES, 'UTF-8');
     }
     
